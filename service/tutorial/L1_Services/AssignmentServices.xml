@@ -78,10 +78,20 @@
     <service verb="get" noun="OrderPartData">
         <out-parameters>
             <parameter name="orderPartDetails"/>
+<!--            <parameter name="orderPartDetails" type="List">-->
+<!--                <parameter name="orderPartMap" type="Map">-->
+<!--                    <parameter name="orderId"/>-->
+<!--                    <parameter name="orderPartSeqId"/>-->
+<!--                    <parameter name="facilityId"/>-->
+<!--                    <parameter name="customerPartyId"/>-->
+<!--                    <parameter name="orderPartDetails"/>-->
+<!--                </parameter>-->
+<!--            </parameter>-->
         </out-parameters>
         <actions>
             <entity-find entity-name="mantle.order.OrderPart" list="Details" >
                 <econdition field-name="facilityId" value="ZIRET_WH"/>
+<!--                <select-field field-name="orderId,orderPartSeqId,facilityId,partName,customerPartyId"/>-->
             </entity-find>
             <set field="orderPartDetails" type="List" from="[ ]"/>
 

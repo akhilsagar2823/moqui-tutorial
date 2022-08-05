@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<services xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/service-definition-2.1.xsd">
+    <service verb="create" noun="OrderHeader">
+        <in-parameters>
+            <parameter name="orderName" required="true"/>
+            <parameter name="currencyUomId" default-value="USD"/>
+            <parameter name="salesChannelEnumId" />
+            <parameter name="statusId" default-value="OrderPlaced"/>
+            <parameter name="productStoreId"/>
+            <parameter name="placedDate" type="Timestamp" required="true"/>
+            <parameter name="approvedDate" type="Timestamp"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="orderId"/>
+        </out-parameters>
+        <actions>
+            <service-call name="mantle.order.OrderServices.create#Order" in-map="context" out-map="context"/>
+        </actions>
+    </service>
+<!--    <service verb=""-->
+</services>
