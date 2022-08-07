@@ -3,12 +3,15 @@
           name="tutorial" displayName="Tutorial REST API" version="1.0.0">
     <resource name="order" require-authentication="anonymous-all">
         <method type="post">
-            <service name="tutorial.L2_Services.AssignmentServices.create#OrderHeader"/>
+            <service name="tutorial.L2Services.AssignmentServices.create#OrderHeader"/>
+        </method>
+        <method type="get">
+            <service name="tutorial.L2Services.AssignmentServices.get#AllOrders"/>
         </method>
     </resource>
     <resource name="AddOrder" require-authentication="anonymous-all">
         <method type="post">
-            <service name="tutorial.L2_Services.AssignmentServices.create#AddOrder"/>
+            <service name="tutorial.L2Services.AssignmentServices.create#AddOrder"/>
         </method>
     </resource>
 </resource>
