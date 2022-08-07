@@ -1,26 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resource xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://moqui.org/xsd/rest-api-3.xsd"
           name="tutorial" displayName="Tutorial REST API" version="1.0.0">
+
     <resource name="order" require-authentication="anonymous-all">
+
 <!--/////////////////////////////////////////1st////////////////////////////////////-->
+        
         <method type="post">
             <service name="tutorial.L2Services.AssignmentServices.create#OrderHeader"/>
         </method>
+        
 <!--/////////////////////////////////////////3rd////////////////////////////////////-->
+        
         <method type="get">
             <service name="tutorial.L2Services.AssignmentServices.get#AllOrders"/>
         </method>
+        
+<!--/////////////////////////////////////////5th////////////////////////////////////-->
+        
+        <method type="put">
+            <service name="tutorial.L2Services.AssignmentServices.update#Order"/>
+        </method>
+
     </resource>
+
     <resource name="AddOrder" require-authentication="anonymous-all">
+
 <!--/////////////////////////////////////////2nd////////////////////////////////////-->
+
         <method type="post">
             <service name="tutorial.L2Services.AssignmentServices.create#AddOrder"/>
         </method>
+
     </resource>
+
     <resource name="AnOrder" require-authentication="anonymous-all">
+
 <!--////////////////////////////////////////4th////////////////////////////////////-->
+
         <method type="get">
             <service name="tutorial.L2Services.AssignmentServices.get#AnOrder"/>
         </method>
+
     </resource>
+
 </resource>

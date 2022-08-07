@@ -230,4 +230,29 @@
         </actions>
     </service>
 
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+    <service verb="update" noun="Order">
+        <in-parameters>
+            <parameter name="orderId" required="true"/>
+            <parameter name="orderName"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="order"/>
+        </out-parameters>
+        <actions>
+            <if condition="orderName">
+                <service-call name="mantle.order.OrderServices.update#OrderHeader" in-map="context" out-map="context"/>
+            </if>
+            <entity-find entity-name="mantle.order.OrderHeader" list="orderHeader">
+                <econdition field-name="orderId"/>
+            </entity-find>
+            <iterate list="orderHeader" entry="Order">
+                <set field="order" type="NewMap" from="[orderId:Order.orderId,orderName:Order.orderName,
+                        currencyUomId:Order.currencyUomId,salesChannelEnumId:Order.salesChannelEnumId,
+                        statusId:Order.statusId,productStoreId:Order.productStoreId,placedDate:Order.placedDate,
+                        approvedDate:Order.approvedDate,grandTotal:Order.grandTotal] "/>
+            </iterate>
+        </actions>
+    </service>
+
 </services>
