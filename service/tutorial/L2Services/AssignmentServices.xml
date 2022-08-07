@@ -43,7 +43,6 @@
         <actions>
             <service-call name="create#mantle.order.OrderPart" in-map="context" out-map="context"/>
             <iterate list="itemDetails" entry="itemMap">
-<!--                <log message="///////////////${[orderId:orderId,orderPartSeqId:orderPartSeqId]+itemMap}/////////////"/>-->
                 <service-call name="create#mantle.order.OrderItem" in-map="[orderId:orderId,orderPartSeqId:orderPartSeqId]+
                         itemMap" out-map="context"/>
             </iterate>
@@ -174,4 +173,61 @@
             </iterate>
         </actions>
     </service>
+
+<!--////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////-->
+
+    <service verb="get" noun="AnOrder">
+        <in-parameters>
+            <parameter name="orderId" required="true"/>
+        </in-parameters>
+        <out-parameters>
+            <parameter name="orderMap" type="Map">
+                <parameter name="orderId"/>
+                <parameter name="orderName"/>
+                <parameter name="currencyUom"/>
+                <parameter name="salesChannelEnumId"/>
+                <parameter name="statusId"/>
+                <parameter name="placedDate" type="Date"/>
+                <parameter name="grandTotal" type="number-decimal"/>
+                <parameter name="customer_details_map" type="Map">
+                    <parameter name="customerPartyId"/>
+                    <parameter name="firstName"/>
+                    <parameter name="middleName"/>
+                    <parameter name="lastName"/>
+                </parameter>
+                <parameter name="order_parts" type="List">
+                    <parameter name="orderPartMap" type="Map">
+                        <parameter name="orderPartSeqId"/>
+                        <parameter name="partName"/>
+                        <parameter name="facilityId"/>
+                        <parameter name="shipmentMethodEnumId"/>
+                        <parameter name="partStatusId"/>
+                        <parameter name="partTotal" type="number-decimal"/>
+                        <parameter name="item_details" type="List">
+                            <parameter name="itemMap" type="Map">
+                                <parameter name="orderItemSeqId"/>
+                                <parameter name="productId"/>
+                                <parameter name="itemDescription"/>
+                                <parameter name="quantity" type="number-integer"/>
+                                <parameter name="unitAmount" type="number-decimal"/>
+                            </parameter>
+                        </parameter>
+                    </parameter>
+                </parameter>
+            </parameter>
+        </out-parameters>
+        <actions>
+            <entity-find entity-name="mantle.order.OrderHeader" list="orderHeader">
+                <econdition field-name="orderId"/>
+            </entity-find>
+            <iterate list="orderHeader" entry="order">
+                <service-call name="tutorial.L2Services.AssignmentServices.get#CustomerDetails" in-map="[orderId:order.orderId]" out-map="customer_details"/>
+                <service-call name="tutorial.L2Services.AssignmentServices.get#OrderParts" in-map="[orderId:order.orderId]" out-map="order_parts"/>
+                <set field="orderMap" from="[orderId:order.orderId,orderName:order.orderName,currencyUom:order.currencyUom,
+                salesChannelEnumId:order.salesChannelEnumId,statusId:order.statusId,placedDate:order.placedDate,grandTotal:order.grandTotal,
+                customer_details:customer_details,order_parts:order_parts]"/>
+            </iterate>
+        </actions>
+    </service>
+
 </services>
